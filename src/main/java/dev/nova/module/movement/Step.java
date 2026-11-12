@@ -6,7 +6,7 @@ import dev.nova.setting.NumberSetting;
 import net.minecraft.entity.attribute.EntityAttributes;
 
 public class Step extends Module {
-	private final NumberSetting height = number("Height", 1.5, 1.0, 5.0, 0.5);
+	private final NumberSetting height = number("Высота", 1.5, 1.0, 5.0, 0.5);
 
 	public Step() {
 		super("Step", "Позволяет заходить на высокие блоки без прыжка", Category.MOVEMENT);

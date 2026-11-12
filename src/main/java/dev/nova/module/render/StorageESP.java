@@ -26,11 +26,11 @@ import java.util.List;
 public class StorageESP extends Module {
 	private static final int REFRESH_TICKS = 10;
 
-	private final BoolSetting chests = bool("Chests", true);
-	private final BoolSetting enderChests = bool("EnderChests", true);
-	private final BoolSetting shulkers = bool("Shulkers", true);
-	private final BoolSetting spawners = bool("Spawners", true);
-	private final BoolSetting other = bool("Other", false);
+	private final BoolSetting chests = bool("Сундуки", true);
+	private final BoolSetting enderChests = bool("Эндер-сундуки", true);
+	private final BoolSetting shulkers = bool("Шалкеры", true);
+	private final BoolSetting spawners = bool("Спавнеры", true);
+	private final BoolSetting other = bool("Другие", false);
 
 	private record Target(Box box, int color) {
 	}
@@ -39,7 +39,7 @@ public class StorageESP extends Module {
 	private int timer;
 
 	public StorageESP() {
-		super("StorageESP", "Подсвечивает сундуки, шалкеры и спавнеры", Category.RENDER);
+		super("StorageESP", "Подсвечивает сундуки, шалкеры и спавнеры", Category.VISUALS);
 	}
 
 	@Override

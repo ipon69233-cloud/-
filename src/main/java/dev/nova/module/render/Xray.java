@@ -29,11 +29,11 @@ public class Xray extends Module {
 		Blocks.BEDROCK
 	);
 
-	private final BoolSetting lava = bool("Lava", true);
-	private final BoolSetting water = bool("Water", false);
+	private final BoolSetting lava = bool("Лава", true);
+	private final BoolSetting water = bool("Вода", false);
 
 	public Xray() {
-		super("Xray", "Показывает руды сквозь блоки", Category.RENDER);
+		super("Xray", "Показывает руды сквозь блоки", Category.VISUALS);
 	}
 
 	public boolean isVisible(BlockState state) {

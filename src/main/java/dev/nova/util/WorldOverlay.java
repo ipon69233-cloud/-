@@ -12,6 +12,7 @@ import net.minecraft.client.gui.render.state.SimpleGuiElementRenderState;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.texture.TextureSetup;
+import net.minecraft.client.util.Window;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix3x2f;
@@ -26,6 +27,8 @@ import org.joml.Vector4f;
 public final class WorldOverlay {
 	private static final float NEAR = 0.1f;
 	private static final Matrix3x2f IDENTITY = new Matrix3x2f();
+	private static final Vector3f POINT = new Vector3f();
+	private static final Vector4f CLIP = new Vector4f();
 
 	private static final Matrix4f view = new Matrix4f();
 	private static final Matrix4f projection = new Matrix4f();
@@ -43,6 +46,18 @@ public final class WorldOverlay {
 
 	public static Lines begin(DrawContext context) {
 		return new Lines(context.getScaledWindowWidth(), context.getScaledWindowHeight());
+	}
+
+	/** Projects a world position to scaled GUI coordinates. Returns false when it is behind the camera. */
+	public static boolean project(Vec3d world, float[] out) {
+		Vector3f point = POINT.set((float) (world.x - cameraPos.x), (float) (world.y - cameraPos.y), (float) (world.z - cameraPos.z));
+		view.transformPosition(point);
+		if (point.z > -NEAR) return false;
+		projection.transform(CLIP.set(point.x, point.y, point.z, 1f));
+		Window window = MinecraftClient.getInstance().getWindow();
+		out[0] = (CLIP.x / CLIP.w * 0.5f + 0.5f) * window.getScaledWidth();
+		out[1] = (0.5f - CLIP.y / CLIP.w * 0.5f) * window.getScaledHeight();
+		return true;
 	}
 
 	/** One batch of line quads, submitted to the GUI renderer as a single element. */
@@ -110,6 +125,36 @@ public final class WorldOverlay {
 				line(c[i + 4], c[next + 4], color, thickness);
 				line(c[i], c[i + 4], color, thickness);
 			}
+		}
+
+		/** Horizontal circle around the center, in the plane of its y coordinate. */
+		public void circle(Vec3d center, double radius, int segments, int color, float thickness) {
+			Vec3d previous = null;
+			for (int i = 0; i <= segments; i++) {
+				double angle = Math.PI * 2 * i / segments;
+				Vec3d point = new Vec3d(center.x + Math.cos(angle) * radius, center.y, center.z + Math.sin(angle) * radius);
+				if (previous != null) line(previous, point, color, thickness);
+				previous = point;
+			}
+		}
+
+		/** Filled triangle in scaled GUI coordinates. */
+		public void triangle(float x1, float y1, float x2, float y2, float x3, float y3, int color) {
+			// Match the winding of vanilla GUI quads, the pipeline culls the other side.
+			if ((x2 - x1) * (y3 - y1) - (y2 - y1) * (x3 - x1) > 0) {
+				float tx = x2;
+				float ty = y2;
+				x2 = x3;
+				y2 = y3;
+				x3 = tx;
+				y3 = ty;
+			}
+			// A quad with a repeated vertex renders as a single triangle.
+			vertices.add(x1); vertices.add(y1);
+			vertices.add(x2); vertices.add(y2);
+			vertices.add(x3); vertices.add(y3);
+			vertices.add(x3); vertices.add(y3);
+			colors.add(color);
 		}
 
 		/** Thickness is in physical pixels. */

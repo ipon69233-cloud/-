@@ -18,8 +18,13 @@ public class MinecraftClientMixin {
 	}
 
 	@Inject(method = "hasOutline", at = @At("HEAD"), cancellable = true)
-	private void nova$espOutline(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-		if (Modules.ESP.shouldGlow(entity)) cir.setReturnValue(true);
+	private void nova$glowOutline(Entity entity, CallbackInfoReturnable<Boolean> cir) {
+		if (Modules.GLOW_ESP.shouldGlow(entity)) cir.setReturnValue(true);
+	}
+
+	@Inject(method = "doItemPick", at = @At("HEAD"), cancellable = true)
+	private void nova$middleClick(CallbackInfo ci) {
+		if (Modules.MIDDLE_CLICK.isEnabled() && Modules.MIDDLE_CLICK.onMiddleClick()) ci.cancel();
 	}
 
 	/** Ambient occlusion would shade ores that are enclosed by hidden blocks almost black. */

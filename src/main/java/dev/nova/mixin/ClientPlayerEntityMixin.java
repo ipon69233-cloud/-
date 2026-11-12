@@ -5,6 +5,8 @@ import dev.nova.module.Modules;
 import net.minecraft.client.network.ClientPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin {
@@ -27,6 +29,12 @@ public class ClientPlayerEntityMixin {
 		at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z")
 	)
 	private boolean nova$noSlow(boolean usingItem) {
-		return usingItem && !Modules.NO_SLOW.isEnabled();
+		if (!usingItem || !Modules.NO_SLOW.isEnabled()) return usingItem;
+		return !Modules.NO_SLOW.ignores(((ClientPlayerEntity) (Object) this).getActiveItem());
+	}
+
+	@Inject(method = "pushOutOfBlocks", at = @At("HEAD"), cancellable = true)
+	private void nova$noPushOutOfBlocks(double x, double z, CallbackInfo ci) {
+		if (Modules.NO_PUSH.isEnabled() && Modules.NO_PUSH.ignoresBlocks()) ci.cancel();
 	}
 }

@@ -1,32 +1,36 @@
 package dev.nova.mixin;
 
-import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.nova.module.Modules;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
 @Mixin(ClientPlayNetworkHandler.class)
 public class ClientPlayNetworkHandlerMixin {
-	@Inject(method = "onEntityVelocityUpdate", at = @At("HEAD"), cancellable = true)
-	private void nova$cancelKnockback(EntityVelocityUpdateS2CPacket packet, CallbackInfo ci) {
-		ClientPlayerEntity player = MinecraftClient.getInstance().player;
-		if (Modules.VELOCITY.isEnabled() && player != null && packet.getEntityId() == player.getId()) ci.cancel();
+	@WrapOperation(
+		method = "onEntityVelocityUpdate",
+		at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setVelocityClient(Lnet/minecraft/util/math/Vec3d;)V")
+	)
+	private void nova$scaleKnockback(Entity entity, Vec3d velocity, Operation<Void> original) {
+		if (Modules.VELOCITY.isEnabled() && entity == MinecraftClient.getInstance().player) {
+			velocity = Modules.VELOCITY.scaleVelocity(entity.getVelocity(), velocity);
+		}
+		original.call(entity, velocity);
 	}
 
-	@WrapWithCondition(
+	@WrapOperation(
 		method = "onExplosion",
 		at = @At(value = "INVOKE", target = "Ljava/util/Optional;ifPresent(Ljava/util/function/Consumer;)V")
 	)
-	private boolean nova$cancelExplosionKnockback(Optional<?> knockback, Consumer<?> action) {
-		return !Modules.VELOCITY.isEnabled();
+	private void nova$scaleExplosionKnockback(Optional<Vec3d> knockback, Consumer<Vec3d> action, Operation<Void> original) {
+		original.call(Modules.VELOCITY.isEnabled() ? knockback.map(Modules.VELOCITY::scaleKnockback) : knockback, action);
 	}
 }

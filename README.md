@@ -15,34 +15,37 @@ Fabric API не нужен. Друзьям достаточно положить
 | Действие | Как |
 | --- | --- |
 | Открыть меню | `Right Shift` |
-| Включить / выключить функцию | ЛКМ по названию |
-| Настройки и привязка клавиши | ПКМ по названию |
-| Привязать клавишу | ЛКМ по строке `Bind`, затем нужная клавиша (`Esc` / `Delete` — убрать) |
+| Выбрать категорию | Иконки в боковой панели |
+| Включить / выключить функцию | ЛКМ по карточке |
+| Настройки функции | Шестерёнка на карточке или ПКМ по ней |
+| Привязать клавишу | ЛКМ по клавише на карточке (или СКМ по карточке), затем нужная клавиша (`Esc` — отмена, `Delete` — убрать) |
+| Сменить клавишу меню | ЛКМ по `RSHIFT` в шапке |
 | Изменить число | Потянуть ползунок |
-| Свернуть панель | ПКМ по заголовку |
-| Передвинуть панель | Перетащить за заголовок |
+| Поиск | Начать печатать или кликнуть по строке поиска |
+| Темы | Клик по логотипу `N` |
+| Профиль | Кнопка внизу боковой панели |
 | Приближение (Zoom) | Держать `C` |
 
-Состояние функций, настройки и клавиши сохраняются в `config/nova.json`.
+Состояние функций, настройки, клавиши, тема и список друзей сохраняются в `config/nova.json`.
 
 ## Функции
 
-**Combat** — KillAura, TriggerBot, Criticals, Velocity, AutoTotem, Reach
+**Combat** — HitAura, TriggerBot, AutoTotem, Velocity, Criticals, Reach, HitBox, HitSounds, BowHelper, AutoGApple
 
-**Movement** — Fly, Speed, Sprint, NoFall, Step, HighJump, AirJump, Spider, Jesus, NoSlow, AutoWalk
+**Movement** — Sprint, Speed, NoSlow, Jesus, Spider, InvMove, DragonFly, WaterSpeed, AirStuck, NoWeb, Fly, NoFall, Step, HighJump, AirJump, AutoWalk
 
-**Render** — Fullbright, ESP (контур / рамки), Tracers, StorageESP, Xray, Zoom, HUD
+**Visuals** — ESP, GlowESP, TargetESP, NameTags, Tracers, StorageESP, BlockESP, BlockOutline, Xray, NightVision, ChinaHat, JumpCircle, Trails, Arrows, Zoom, Hud
 
-**Player** — AutoTool, FastPlace, FastBreak, AutoEat, AutoRespawn, ChestStealer, AutoFish
+**Player** — FreeCamera, AutoTool, FastBreak, NoDelay, NoPush, Blink, AntiAFK, CameraClip, ElytraHelper, MiddleClick, FakePlayer, AutoFish, AutoEat, AutoRespawn, ChestStealer
 
-**World** — Nuker, Scaffold, Timer
+**Misc** — Scaffold, Nuker, Timer, SeeInvisibles, Removals, TapeMouse
 
-Описание каждой функции показывается внизу меню при наведении.
+Описание функции написано на её карточке.
 
 ## Ограничения
 
 - Xray меняет стандартную сборку чанков и не работает вместе с Sodium и другими модами, которые её заменяют.
-- KillAura по умолчанию не трогает игроков — включи `Players` в её настройках, если нужно.
+- HitAura по умолчанию бьёт игроков и мобов, но не друзей — цели меняются в её настройках. Друзья добавляются функцией MiddleClick.
 - Reach ограничен тем, что принимает сервер: до 6 блоков для ударов и 5.5 для блоков.
 
 ## Разработка

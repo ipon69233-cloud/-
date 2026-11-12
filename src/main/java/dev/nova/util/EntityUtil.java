@@ -1,5 +1,6 @@
 package dev.nova.util;
 
+import dev.nova.setting.MultiSetting;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
@@ -45,6 +46,11 @@ public final class EntityUtil {
 			case ITEM -> items;
 			case OTHER -> false;
 		};
+	}
+
+	/** Filter for the usual Игроки / Мобы / Животные / Предметы target settings. */
+	public static boolean matches(Entity entity, MultiSetting targets) {
+		return matches(entity, targets.is("Игроки"), targets.is("Мобы"), targets.is("Животные"), targets.is("Предметы"));
 	}
 
 	/** Bounding box at the interpolated position of the current frame. */

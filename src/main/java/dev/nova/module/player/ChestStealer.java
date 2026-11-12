@@ -9,8 +9,8 @@ import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 
 public class ChestStealer extends Module {
-	private final NumberSetting delay = number("Delay", 1, 0, 10, 1);
-	private final BoolSetting autoClose = bool("AutoClose", true);
+	private final NumberSetting delay = number("Задержка", 1, 0, 10, 1);
+	private final BoolSetting autoClose = bool("Автозакрытие", true);
 
 	private int timer;
 

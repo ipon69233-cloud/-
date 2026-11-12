@@ -14,14 +14,14 @@ import net.minecraft.util.math.Vec3d;
 public class Nuker extends Module {
 	private static final int CREATIVE_BLOCKS_PER_TICK = 8;
 
-	private final NumberSetting range = number("Range", 4.0, 1.0, 5.0, 0.5);
-	private final BoolSetting flat = bool("Flat", true);
+	private final NumberSetting range = number("Радиус", 4.0, 1.0, 5.0, 0.5);
+	private final BoolSetting flat = bool("Не копать ниже", true);
 
 	/** Block being mined in survival; kept until it breaks so progress is not reset. */
 	private BlockPos target;
 
 	public Nuker() {
-		super("Nuker", "Ломает блоки вокруг игрока", Category.WORLD);
+		super("Nuker", "Ломает блоки вокруг игрока", Category.MISC);
 	}
 
 	@Override

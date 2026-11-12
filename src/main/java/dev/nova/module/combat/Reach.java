@@ -7,8 +7,8 @@ import net.minecraft.entity.attribute.EntityAttributes;
 
 public class Reach extends Module {
 	// The server tolerates +3 blocks for entities and +1 for blocks on top of the vanilla range.
-	private final NumberSetting entities = number("Entities", 5.0, 3.0, 6.0, 0.1);
-	private final NumberSetting blocks = number("Blocks", 5.5, 4.5, 5.5, 0.1);
+	private final NumberSetting entities = number("Сущности", 5.0, 3.0, 6.0, 0.1);
+	private final NumberSetting blocks = number("Блоки", 5.5, 4.5, 5.5, 0.1);
 
 	public Reach() {
 		super("Reach", "Увеличивает дистанцию ударов и взаимодействия", Category.COMBAT);

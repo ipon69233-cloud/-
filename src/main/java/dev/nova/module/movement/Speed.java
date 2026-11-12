@@ -2,38 +2,34 @@ package dev.nova.module.movement;
 
 import dev.nova.module.Category;
 import dev.nova.module.Module;
+import dev.nova.setting.ModeSetting;
 import dev.nova.setting.NumberSetting;
+import dev.nova.util.MoveUtil;
 import net.minecraft.util.math.Vec3d;
 
 public class Speed extends Module {
-	private final NumberSetting speed = number("Speed", 0.6, 0.3, 3.0, 0.05);
+	private final ModeSetting mode = mode("Режим", "Strafe", "Strafe", "Bhop");
+	private final NumberSetting speed = number("Скорость", 0.6, 0.3, 3.0, 0.05);
 
 	public Speed() {
-		super("Speed", "Ускоряет передвижение по земле и в воздухе", Category.MOVEMENT);
+		super("Speed", "Ускоряет передвижение игрока", Category.MOVEMENT);
 	}
 
 	@Override
 	public void onTick() {
 		if (mc.player.getAbilities().flying || mc.player.isGliding() || mc.player.hasVehicle()) return;
 
-		float forward = axis(mc.options.forwardKey.isPressed(), mc.options.backKey.isPressed());
-		float sideways = axis(mc.options.leftKey.isPressed(), mc.options.rightKey.isPressed());
-		if (forward == 0 && sideways == 0) return;
+		Vec3d direction = MoveUtil.direction();
+		if (direction == null) return;
 
-		double yaw = Math.toRadians(mc.player.getYaw());
-		double sin = Math.sin(yaw);
-		double cos = Math.cos(yaw);
-		// Forward is (-sin, cos) and left is (cos, sin) in Minecraft's yaw convention.
-		Vec3d direction = new Vec3d(forward * -sin + sideways * cos, 0, forward * cos + sideways * sin).normalize();
+		if (mode.is("Bhop") && mc.player.isOnGround() && !mc.player.isSneaking() && !mc.player.isTouchingWater() && !mc.player.isInLava()) {
+			mc.player.jump();
+		}
 		mc.player.setVelocity(direction.x * speed.get(), mc.player.getVelocity().y, direction.z * speed.get());
-	}
-
-	private static float axis(boolean positive, boolean negative) {
-		return (positive ? 1 : 0) - (negative ? 1 : 0);
 	}
 
 	@Override
 	public String getSuffix() {
-		return speed.format();
+		return mode.get();
 	}
 }

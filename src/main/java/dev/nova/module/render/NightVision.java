@@ -5,15 +5,15 @@ import dev.nova.module.Module;
 import dev.nova.module.Modules;
 
 /** The brightness is raised in LightmapTextureManagerMixin, the gamma option stays untouched. */
-public class Fullbright extends Module {
+public class NightVision extends Module {
 	public static final float BRIGHT_GAMMA = 16f;
 
-	public Fullbright() {
-		super("Fullbright", "Максимальная яркость в темноте", Category.RENDER);
+	public NightVision() {
+		super("NightVision", "Ночное зрение под водой и в темноте", Category.VISUALS);
 	}
 
 	/** Xray needs full brightness as well, ores are enclosed by unlit blocks. */
 	public static boolean isBright() {
-		return Modules.FULLBRIGHT.isEnabled() || Modules.XRAY.isEnabled();
+		return Modules.NIGHT_VISION.isEnabled() || Modules.XRAY.isEnabled();
 	}
 }

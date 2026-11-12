@@ -4,13 +4,13 @@ import dev.nova.module.Category;
 import dev.nova.module.Module;
 import dev.nova.setting.NumberSetting;
 import dev.nova.util.InvUtil;
-import net.minecraft.client.option.KeyBinding;
+import dev.nova.util.KeyUtil;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 
 public class AutoEat extends Module {
-	private final NumberSetting hunger = number("Hunger", 14, 1, 19, 1);
+	private final NumberSetting hunger = number("Голод", 14, 1, 19, 1);
 
 	private boolean eating;
 	private int previousSlot;
@@ -31,7 +31,7 @@ public class AutoEat extends Module {
 		if (eating) {
 			boolean done = !hungry && !mc.player.isUsingItem();
 			if (done || !isFood(mc.player.getMainHandStack())) stop();
-			else hold(true);
+			else KeyUtil.holdUse(true);
 			return;
 		}
 		if (!hungry || mc.currentScreen != null) return;
@@ -41,21 +41,13 @@ public class AutoEat extends Module {
 		previousSlot = inventory.getSelectedSlot();
 		inventory.setSelectedSlot(slot);
 		eating = true;
-		hold(true);
+		KeyUtil.holdUse(true);
 	}
 
 	private void stop() {
 		eating = false;
-		hold(false);
+		KeyUtil.holdUse(false);
 		if (inGame()) mc.player.getInventory().setSelectedSlot(previousSlot);
-	}
-
-	/** The use key may be in toggle mode, where every press flips its state. */
-	private static void hold(boolean pressed) {
-		KeyBinding use = mc.options.useKey;
-		if (use.isPressed() == pressed) return;
-		use.setPressed(pressed);
-		if (use.isPressed() != pressed) use.setPressed(true);
 	}
 
 	@Override

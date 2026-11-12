@@ -2,22 +2,42 @@ package dev.nova.module.player;
 
 import dev.nova.module.Category;
 import dev.nova.module.Module;
+import dev.nova.setting.BoolSetting;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 
 public class AutoTool extends Module {
+	private final BoolSetting restore = bool("Возврат в слот", true);
+
+	/** Slot that was selected before the tool was picked, or -1. */
+	private int previousSlot = -1;
+
 	public AutoTool() {
-		super("AutoTool", "Берёт лучший инструмент для блока", Category.PLAYER);
+		super("AutoTool", "Авто-выбор нужного инструмента", Category.PLAYER);
+	}
+
+	@Override
+	protected void onDisable() {
+		if (inGame()) restoreSlot();
+	}
+
+	private void restoreSlot() {
+		if (previousSlot != -1 && restore.get()) mc.player.getInventory().setSelectedSlot(previousSlot);
+		previousSlot = -1;
 	}
 
 	@Override
 	public void onTick() {
-		if (!mc.options.attackKey.isPressed() || mc.currentScreen != null || mc.player.isCreative()) return;
-		if (!(mc.crosshairTarget instanceof BlockHitResult hit) || hit.getType() != HitResult.Type.BLOCK) return;
+		boolean mining = mc.options.attackKey.isPressed() && mc.currentScreen == null && !mc.player.isCreative()
+			&& mc.crosshairTarget instanceof BlockHitResult hit && hit.getType() == HitResult.Type.BLOCK;
+		if (!mining) {
+			restoreSlot();
+			return;
+		}
 
-		BlockState state = mc.world.getBlockState(hit.getBlockPos());
+		BlockState state = mc.world.getBlockState(((BlockHitResult) mc.crosshairTarget).getBlockPos());
 		PlayerInventory inventory = mc.player.getInventory();
 		int best = inventory.getSelectedSlot();
 		float bestSpeed = inventory.getStack(best).getMiningSpeedMultiplier(state);
@@ -28,6 +48,8 @@ public class AutoTool extends Module {
 				best = slot;
 			}
 		}
-		if (best != inventory.getSelectedSlot()) inventory.setSelectedSlot(best);
+		if (best == inventory.getSelectedSlot()) return;
+		if (previousSlot == -1) previousSlot = inventory.getSelectedSlot();
+		inventory.setSelectedSlot(best);
 	}
 }

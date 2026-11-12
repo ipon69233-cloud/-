@@ -12,7 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientPlayerInteractionManager.class)
 public class ClientPlayerInteractionManagerMixin {
 	@Inject(method = "attackEntity", at = @At("HEAD"))
-	private void nova$criticals(PlayerEntity player, Entity target, CallbackInfo ci) {
+	private void nova$onAttack(PlayerEntity player, Entity target, CallbackInfo ci) {
 		if (Modules.CRITICALS.isEnabled()) Modules.CRITICALS.beforeAttack(target);
+		if (Modules.HIT_SOUNDS.isEnabled()) Modules.HIT_SOUNDS.onAttack(target);
 	}
 }

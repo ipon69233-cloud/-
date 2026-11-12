@@ -8,7 +8,7 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 public class Criticals extends Module {
 	public Criticals() {
-		super("Criticals", "Каждый удар с земли становится критическим", Category.COMBAT);
+		super("Criticals", "Наносит критические удары пакетами", Category.COMBAT);
 	}
 
 	/** Called right before the attack packet is sent. */

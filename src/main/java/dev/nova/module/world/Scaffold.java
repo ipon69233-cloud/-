@@ -15,7 +15,7 @@ import net.minecraft.util.math.Vec3d;
 
 public class Scaffold extends Module {
 	public Scaffold() {
-		super("Scaffold", "Ставит блоки под ногами при ходьбе", Category.WORLD);
+		super("Scaffold", "Ставит блоки под ногами при ходьбе", Category.MISC);
 	}
 
 	private static boolean isBuildingBlock(ItemStack stack) {

@@ -8,7 +8,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 public class HighJump extends Module {
 	private static final double DEFAULT_JUMP_STRENGTH = 0.42;
 
-	private final NumberSetting multiplier = number("Multiplier", 2.0, 1.0, 8.0, 0.5);
+	private final NumberSetting multiplier = number("Множитель", 2.0, 1.0, 8.0, 0.5);
 
 	public HighJump() {
 		super("HighJump", "Увеличивает высоту прыжка", Category.MOVEMENT);

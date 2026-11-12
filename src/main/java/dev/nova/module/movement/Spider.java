@@ -6,10 +6,10 @@ import dev.nova.setting.NumberSetting;
 import net.minecraft.util.math.Vec3d;
 
 public class Spider extends Module {
-	private final NumberSetting speed = number("Speed", 0.2, 0.1, 1.0, 0.05);
+	private final NumberSetting speed = number("Скорость", 0.2, 0.1, 1.0, 0.05);
 
 	public Spider() {
-		super("Spider", "Позволяет взбираться по стенам", Category.MOVEMENT);
+		super("Spider", "Лазание по вертикальным стенам", Category.MOVEMENT);
 	}
 
 	@Override

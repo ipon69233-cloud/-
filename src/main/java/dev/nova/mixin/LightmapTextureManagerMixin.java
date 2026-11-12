@@ -1,7 +1,7 @@
 package dev.nova.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import dev.nova.module.render.Fullbright;
+import dev.nova.module.render.NightVision;
 import net.minecraft.client.render.LightmapTextureManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,7 +13,7 @@ public class LightmapTextureManagerMixin {
 		method = "update",
 		at = @At(value = "INVOKE", target = "Ljava/lang/Double;floatValue()F", ordinal = 1)
 	)
-	private float nova$fullbright(float gamma) {
-		return Fullbright.isBright() ? Fullbright.BRIGHT_GAMMA : gamma;
+	private float nova$nightVision(float gamma) {
+		return NightVision.isBright() ? NightVision.BRIGHT_GAMMA : gamma;
 	}
 }
