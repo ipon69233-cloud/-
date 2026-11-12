@@ -15,7 +15,7 @@ public class Tracers extends Module {
 	private final BoolSetting items = bool("Items", false);
 
 	public Tracers() {
-		super("Tracers", "Рисует линии от прицела к целям", Category.RENDER);
+		super("Tracers", "Рисует линии от прицела к целям", Category.VISUALS);
 	}
 
 	@Override
