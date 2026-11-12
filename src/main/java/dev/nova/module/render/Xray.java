@@ -33,7 +33,7 @@ public class Xray extends Module {
 	private final BoolSetting water = bool("Water", false);
 
 	public Xray() {
-		super("Xray", "Показывает руды сквозь блоки", Category.RENDER);
+		super("Xray", "Показывает руды сквозь блоки", Category.VISUALS);
 	}
 
 	public boolean isVisible(BlockState state) {
