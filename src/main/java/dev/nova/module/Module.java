@@ -1,7 +1,9 @@
 package dev.nova.module;
 
 import dev.nova.setting.BoolSetting;
+import dev.nova.setting.ColorSetting;
 import dev.nova.setting.ModeSetting;
+import dev.nova.setting.MultiSetting;
 import dev.nova.setting.NumberSetting;
 import dev.nova.setting.Setting;
 import net.minecraft.client.MinecraftClient;
@@ -44,6 +46,15 @@ public abstract class Module {
 
 	protected ModeSetting mode(String name, String value, String... modes) {
 		return add(new ModeSetting(name, value, modes));
+	}
+
+	/** Items are declared on the result with {@link MultiSetting#add}. */
+	protected MultiSetting multi(String name) {
+		return add(new MultiSetting(name));
+	}
+
+	protected ColorSetting color(String name, int color) {
+		return add(new ColorSetting(name, color));
 	}
 
 	private <S extends Setting<?>> S add(S setting) {

@@ -17,7 +17,7 @@ public class ESP extends Module {
 	private final BoolSetting items = bool("Items", false);
 
 	public ESP() {
-		super("ESP", "Подсвечивает игроков и мобов сквозь стены", Category.RENDER);
+		super("ESP", "Подсвечивает игроков и мобов сквозь стены", Category.VISUALS);
 	}
 
 	private boolean matches(Entity entity) {

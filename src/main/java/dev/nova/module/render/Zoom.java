@@ -10,7 +10,7 @@ public class Zoom extends Module {
 	private final NumberSetting factor = number("Factor", 4.0, 2.0, 16.0, 1.0);
 
 	public Zoom() {
-		super("Zoom", "Приближает камеру, пока зажата клавиша", Category.RENDER);
+		super("Zoom", "Приближает камеру, пока зажата клавиша", Category.VISUALS);
 		hold = true;
 		hidden = true;
 		setKey(GLFW.GLFW_KEY_C);
