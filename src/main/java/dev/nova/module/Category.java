@@ -3,9 +3,9 @@ package dev.nova.module;
 public enum Category {
 	COMBAT("Combat"),
 	MOVEMENT("Movement"),
-	RENDER("Render"),
+	VISUALS("Visuals"),
 	PLAYER("Player"),
-	WORLD("World");
+	MISC("Misc");
 
 	public final String title;
 

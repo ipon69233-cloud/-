@@ -18,7 +18,7 @@ public class Hud extends Module {
 	private final BoolSetting info = bool("Info", true);
 
 	public Hud() {
-		super("HUD", "Список включённых функций, координаты и FPS", Category.RENDER);
+		super("HUD", "Список включённых функций, координаты и FPS", Category.VISUALS);
 		hidden = true;
 		setEnabled(true);
 	}

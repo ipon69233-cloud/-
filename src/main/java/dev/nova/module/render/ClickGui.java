@@ -7,7 +7,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class ClickGui extends Module {
 	public ClickGui() {
-		super("ClickGUI", "Открывает это меню", Category.RENDER);
+		super("ClickGUI", "Открывает это меню", Category.VISUALS);
 		hidden = true;
 		setKey(GLFW.GLFW_KEY_RIGHT_SHIFT);
 	}

@@ -39,7 +39,7 @@ public class StorageESP extends Module {
 	private int timer;
 
 	public StorageESP() {
-		super("StorageESP", "Подсвечивает сундуки, шалкеры и спавнеры", Category.RENDER);
+		super("StorageESP", "Подсвечивает сундуки, шалкеры и спавнеры", Category.VISUALS);
 	}
 
 	@Override
