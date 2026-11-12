@@ -21,7 +21,7 @@ public class Nuker extends Module {
 	private BlockPos target;
 
 	public Nuker() {
-		super("Nuker", "Ломает блоки вокруг игрока", Category.WORLD);
+		super("Nuker", "Ломает блоки вокруг игрока", Category.MISC);
 	}
 
 	@Override

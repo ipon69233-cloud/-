@@ -9,7 +9,7 @@ public class Fullbright extends Module {
 	public static final float BRIGHT_GAMMA = 16f;
 
 	public Fullbright() {
-		super("Fullbright", "Максимальная яркость в темноте", Category.RENDER);
+		super("Fullbright", "Максимальная яркость в темноте", Category.VISUALS);
 	}
 
 	/** Xray needs full brightness as well, ores are enclosed by unlit blocks. */

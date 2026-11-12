@@ -1,0 +1,7 @@
+{
+	"providers": [
+		{"type": "ttf", "file": "nova:inter-latin-500.ttf", "size": 10, "oversample": 1.1},
+		{"type": "ttf", "file": "nova:inter-cyrillic-500.ttf", "size": 10, "oversample": 1.1},
+		{"type": "reference", "id": "minecraft:default"}
+	]
+}
