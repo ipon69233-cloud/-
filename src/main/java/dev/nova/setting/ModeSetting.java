@@ -17,6 +17,15 @@ public class ModeSetting extends Setting<String> {
 		return value.equals(mode);
 	}
 
+	public List<String> getModes() {
+		return modes;
+	}
+
+	@Override
+	public void set(String mode) {
+		if (modes.contains(mode)) value = mode;
+	}
+
 	public void cycle(boolean forward) {
 		int index = modes.indexOf(value) + (forward ? 1 : -1);
 		value = modes.get(Math.floorMod(index, modes.size()));

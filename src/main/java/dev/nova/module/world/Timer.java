@@ -9,7 +9,7 @@ public class Timer extends Module {
 	private final NumberSetting speed = number("Speed", 2.0, 0.1, 5.0, 0.1);
 
 	public Timer() {
-		super("Timer", "Ускоряет или замедляет игру для игрока", Category.WORLD);
+		super("Timer", "Ускоряет или замедляет игру для игрока", Category.MISC);
 	}
 
 	public float getMultiplier() {
