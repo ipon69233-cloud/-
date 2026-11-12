@@ -1,0 +1,27 @@
+{
+	"required": true,
+	"package": "dev.nova.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"BlockRenderManagerMixin",
+		"ClientPlayNetworkHandlerMixin",
+		"ClientPlayerEntityMixin",
+		"ClientPlayerInteractionManagerAccessor",
+		"ClientPlayerInteractionManagerMixin",
+		"DrawContextAccessor",
+		"EntityMixin",
+		"FishingBobberEntityAccessor",
+		"GameRendererMixin",
+		"InGameHudMixin",
+		"KeyboardMixin",
+		"LightmapTextureManagerMixin",
+		"LivingEntityMixin",
+		"MinecraftClientAccessor",
+		"MinecraftClientMixin",
+		"RenderTickCounterMixin",
+		"WorldRendererMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
